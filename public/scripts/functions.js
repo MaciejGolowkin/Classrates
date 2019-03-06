@@ -1,12 +1,12 @@
 function submitComment(commentControl) {
     var comments = document.getElementsByName(commentControl)[0].value;
-    var subscriptionKey = "TEXT_ANALYTICS_API_KEY";
-    var url = "TEXT_ANALYTICS_ENDPOINT/sentiment";
+    var subscriptionKey = "73dcb98828d14b12a16fbe56ed374016";
+    var url = "https://northeurope.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment";
 
     var payload = '{ "documents": [ { "language": "en-US", "id": "1", "text": "' + comments + '" }]}';
 
     $.ajax({
-        type: "POST",
+        type: "POST",   
         url: url,
         data: payload,
         processData: false,
@@ -17,7 +17,7 @@ function submitComment(commentControl) {
     }).done(function (data) {
 
         var sentimentRating = Math.round((data.documents[0].score * 100) / 25) + 1;
-
+        
         var currentItemId = JSON.parse(localStorage.getItem('currentItemId'));
 
         window.location.href = '/comments?classId=' + currentItemId + '&rating=' + sentimentRating + '&comments=' + comments;
